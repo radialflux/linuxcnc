@@ -1,0 +1,5 @@
+component names_match;
+license "GPL";
+pin out bit out;
+;;
+FUNCTION(_) {}
