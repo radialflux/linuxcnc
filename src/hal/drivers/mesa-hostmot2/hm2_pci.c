@@ -703,8 +703,6 @@ static int hm2_pci_probe(struct rtapi_pci_dev *dev, const struct rtapi_pci_devic
 
     board->llio.read = hm2_pci_read;
     board->llio.write = hm2_pci_write;
-    board->llio.queue_read = hm2_pci_read;
-    board->llio.queue_write = hm2_pci_write;
 
     r = hm2_register(&board->llio, config[num_boards]);
     if (r != 0) {
