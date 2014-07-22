@@ -174,13 +174,6 @@ int hm2_watchdog_parse_md(hostmot2_t *hm2, int md_index) {
     // allocate memory for register buffers
     //
 
-    hm2->watchdog.status_reg = (rtapi_u32 *)rtapi_kmalloc(hm2->watchdog.num_instances * sizeof(rtapi_u32), RTAPI_GFP_KERNEL);
-    if (hm2->watchdog.status_reg == NULL) {
-        HM2_ERR("out of memory!\n");
-        r = -ENOMEM;
-        goto fail0;
-    }
-
     hm2->watchdog.reset_reg = (rtapi_u32 *)rtapi_kmalloc(hm2->watchdog.num_instances * sizeof(rtapi_u32), RTAPI_GFP_KERNEL);
     if (hm2->watchdog.reset_reg == NULL) {
         HM2_ERR("out of memory!\n");
@@ -254,7 +247,6 @@ int hm2_watchdog_parse_md(hostmot2_t *hm2, int md_index) {
     hm2->watchdog.instance[0].warned_about_short_timeout = 0;
 
     hm2->watchdog.reset_reg[0] = 0x5a000000;
-    hm2->watchdog.status_reg[0] = 0;
 
 
     return hm2->watchdog.num_instances;
@@ -295,7 +287,6 @@ void hm2_watchdog_print_module(hostmot2_t *hm2) {
 
 void hm2_watchdog_cleanup(hostmot2_t *hm2) {
     if (hm2->watchdog.num_instances <= 0) return;
-    if (hm2->watchdog.status_reg != NULL) rtapi_kfree(hm2->watchdog.status_reg);
     if (hm2->watchdog.reset_reg != NULL) rtapi_kfree(hm2->watchdog.reset_reg);
     if (hm2->watchdog.timer_reg != NULL) rtapi_kfree(hm2->watchdog.timer_reg);
 }
